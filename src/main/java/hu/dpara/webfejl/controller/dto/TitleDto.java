@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Date;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -13,7 +15,7 @@ public class TitleDto {
 	
 	private int empNo;
 	private String title;
-	private String fromDate;
-	private String toDate;
+	private Date fromDate;
+	private Date toDate;
 	
 }

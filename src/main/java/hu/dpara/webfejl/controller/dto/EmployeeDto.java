@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Date;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -13,10 +15,10 @@ import lombok.experimental.SuperBuilder;
 public class EmployeeDto {
 
 	private int empNo;
-	private String birthDate;
+	private Date birthDate;
 	private String firstName;
 	private String lastName;
 	private Gender gender;
-	private String hireDate;
+	private Date hireDate;
 	
 }

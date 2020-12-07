@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Date;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -13,7 +15,7 @@ public class DeptEmpDto {
 	
 	private int empNo;
 	private String deptNo;
-	private String fromDate;
-	private String toDate;
+	private Date fromDate;
+	private Date toDate;
 
 }
