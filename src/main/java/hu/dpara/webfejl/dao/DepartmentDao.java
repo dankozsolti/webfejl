@@ -8,9 +8,9 @@ import java.util.Collection;
 
 public interface DepartmentDao {
 
-    void createDepartment(Department department) throws DepartmentAlreadyExistsException;
     Collection<Department> readAll();
     Department readByDeptNo(String deptNo) throws UnknownDepartmentException;
+    void createDepartment(Department department) throws DepartmentAlreadyExistsException;
     void deleteByDeptNo(String deptNo) throws UnknownDepartmentException;
     void update(Department department) throws UnknownDepartmentException;
 

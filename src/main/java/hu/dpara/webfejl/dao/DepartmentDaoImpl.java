@@ -1,5 +1,9 @@
 package hu.dpara.webfejl.dao;
 
+import hu.dpara.webfejl.dao.entity.DepartmentEntity;
+import hu.dpara.webfejl.exception.DepartmentAlreadyExistsException;
+import hu.dpara.webfejl.exception.UnknownDepartmentException;
+import hu.dpara.webfejl.model.Department;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,135 +18,84 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class DepartmentDaoImpl implements DepartmentDao {
 
-    private final DepartmentRepository customerRepository;
-    private final YearMonthRepository yearMonthRepository;
-    private final TransactionRepository transactionRepository;
+    private final DepartmentRepository departmentRepository;
+
     @Override
-    public void createCustomer(Customer customer)throws CustomerAlreadyExistsException {
-        CustomerEntity customerEntity;
+    public void createDepartment(Department department) throws DepartmentAlreadyExistsException {
+
+        DepartmentEntity departmentEntity;
+
         try {
-            customerEntity = queryCustomer(customer.getId());
+            departmentEntity = queryDepartment(department.getDeptNo());
 
         }
-        catch (UnknownCustomerException e){
-            log.error("Exception: {} handled with message: "+e.getMessage(),e.getClass());
-            customerEntity = CustomerEntity.builder()
-                    .id(customer.getId())
-                    .segment(customer.getSegment())
-                    .currency(customer.getCurrency())
-                    .build();
-            customerRepository.save(customerEntity);
-            log.trace("Recorded new Customer: {}",customerEntity);
-            return;
+        catch (UnknownDepartmentException e){
+
+        departmentEntity = DepartmentEntity.builder()
+                .deptNo(department.getDeptNo())
+                .deptName(department.getDeptName())
+                .build();
+        log.info("DepartmentEntity: {}", departmentEntity);
+        departmentRepository.save(departmentEntity);
+        return;
+    }
+    DepartmentAlreadyExistsException departmentException = new DepartmentAlreadyExistsException("Department with department number "+department.getDeptNo()+" already exists.");
+        log.error("Exception: {} thrown with message: "+departmentException.getMessage(),departmentException.getClass());
+        throw departmentException;
+
+    }
+
+
+
+    @Override
+    public Collection<Department> readAll() {
+        return StreamSupport.stream(departmentRepository.findAll().spliterator(),false)
+                .map(entity -> new Department(
+                        entity.getDeptNo(),
+                        entity.getDeptName()
+
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Department readByDeptNo(String deptNo) throws UnknownDepartmentException {
+
+        DepartmentEntity departmentEntity = queryDepartment(deptNo);
+        log.trace("Department found by department number: {} department: {}", deptNo,departmentEntity);
+        return new Department(departmentEntity.getDeptNo(),departmentEntity.getDeptName());
+
+    }
+
+    @Override
+    public void deleteByDeptNo(String deptNo) throws UnknownDepartmentException {
+
+        DepartmentEntity departmentEntity = queryDepartment(deptNo);
+        departmentRepository.deleteByDeptNo(deptNo);
+        log.trace("Department deleted: {}", departmentEntity);
+
+    }
+
+    @Override
+    public void update( Department department) throws UnknownDepartmentException {
+
+        DepartmentEntity departmentEntity = queryDepartment(department.getDeptNo());
+
+        departmentEntity.setDeptNo(department.getDeptNo());
+        departmentEntity.setDeptName(department.getDeptName());
+
+        departmentRepository.save(departmentEntity);
+        log.trace("Department updated: {}", departmentEntity);
+    }
+
+    private DepartmentEntity queryDepartment(String deptNo) throws UnknownDepartmentException {
+        Optional<DepartmentEntity> departmentEntity = departmentRepository.findByDeptNo(deptNo);
+
+        if (!departmentEntity.isPresent()) {
+            UnknownDepartmentException departmentException = new UnknownDepartmentException("Department with department number" + deptNo + " doesn't exist.");
+            log.error("Exception: {} thrown with message: "+departmentException.getMessage(),departmentException.getClass());
+            throw departmentException;
         }
-        CustomerAlreadyExistsException customerException = new CustomerAlreadyExistsException("Customer with id: "+customer.getId()+" already exists.");
-        log.error("Exception: {} thrown with message: "+customerException.getMessage(),customerException.getClass());
-        throw customerException;
-
-    }
-
-    @Override
-    public Collection<Customer> readAll() {
-        log.trace("Read all customers");
-        return StreamSupport.stream(customerRepository.findAll().spliterator(),false)
-                .map(entity -> new Customer(
-                        entity.getId(),
-                        entity.getSegment(),
-                        entity.getCurrency()
-                )).collect(Collectors.toList());
-    }
-
-    @Override
-    public Customer readById(int id) throws UnknownCustomerException {
-
-        CustomerEntity customerEntity = queryCustomer(id);
-        log.trace("Customer found by id: {} customer: {}", id,customerEntity);
-        return  new Customer(customerEntity.getId(),customerEntity.getSegment(), customerEntity.getCurrency());
-
-    }
-
-
-
-
-    @Override
-    public void deleteById(int id) throws UnknownCustomerException {
-
-        CustomerEntity customerEntity = queryCustomer(id);
-        yearMonthRepository.deleteAllByCustomerId(id);
-        log.trace("All yearMonths deleted by customerId: {}", id);
-        transactionRepository.deleteAllByCustomerId(id);
-        log.trace("All transactions deleted by customerId: {}", id);
-        customerRepository.deleteById(id);
-        log.trace("Customer deleted: {}", customerEntity);
-
-    }
-
-    @Override
-    public void update( Customer customer) throws UnknownCustomerException {
-
-        CustomerEntity customerEntity = queryCustomer(customer.getId());
-
-        customerEntity.setSegment(customer.getSegment());
-        customerEntity.setCurrency(customer.getCurrency());
-
-        customerRepository.save(customerEntity);
-        log.trace("Customer updated: {}", customerEntity);
-    }
-
-    @Override
-    public Collection<Customer> readAllBySegment(String segment) throws UnknownCustomerException {
-        Collection<CustomerEntity> customerEntities = queryCustomerBySegment(segment);
-        log.trace("All customer found by segment: {} customers:{}",segment,customerEntities);
-        return StreamSupport.stream(customerEntities.spliterator(),false)
-                .map(entity -> new Customer(
-                        entity.getId(),
-                        entity.getSegment(),
-                        entity.getCurrency()
-                )).collect(Collectors.toList());
-    }
-
-    @Override
-    public Collection<Customer> readAllByCurrency(String currency) throws UnknownCustomerException {
-        Collection<CustomerEntity> customerEntities = queryCustomerByCurrency(currency);
-        log.trace("All customer found by currency: {} customers:{}",currency,customerEntities);
-        return StreamSupport.stream(customerEntities.spliterator(),false)
-                .map(entity -> new Customer(
-                        entity.getId(),
-                        entity.getSegment(),
-                        entity.getCurrency()
-                )).collect(Collectors.toList());
-    }
-
-    private CustomerEntity queryCustomer(int id) throws UnknownCustomerException {
-        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
-
-        if (!customerEntity.isPresent()) {
-            UnknownCustomerException customerException = new UnknownCustomerException("Customer with id: " + Integer.toString(id)+" not exists.");
-            log.error("Exception: {} thrown with message: "+customerException.getMessage(),customerException.getClass());
-            throw customerException;
-        }
-        return customerEntity.get();
-    }
-
-    protected Collection<CustomerEntity> queryCustomerBySegment(String segment) throws UnknownCustomerException {
-        Collection<CustomerEntity> customerEntities = customerRepository.findAllBySegment(segment);
-
-        if (customerEntities.isEmpty()) {
-            UnknownCustomerException customerException = new UnknownCustomerException("Customer with segment: " + segment+" not exists.");
-            log.error("Exception: {} thrown with message: "+customerException.getMessage(),customerException.getClass());
-            throw customerException;
-        }
-        return customerEntities;
-    }
-
-    protected Collection<CustomerEntity> queryCustomerByCurrency(String currency) throws UnknownCustomerException {
-        Collection<CustomerEntity> customerEntities = customerRepository.findAllByCurrency(currency);
-
-        if (customerEntities.isEmpty()) {
-            UnknownCustomerException customerException = new UnknownCustomerException("Customer with currency: " + currency +" not exists.");
-            log.error("Exception: {} thrown with message: "+customerException.getMessage(),customerException.getClass());
-            throw customerException;
-        }
-        return customerEntities;
+        return departmentEntity.get();
     }
 }

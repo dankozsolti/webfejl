@@ -1,6 +1,15 @@
 package hu.dpara.webfejl.controller.dto;
 
-public class DepartmentRequestDto extends DepartmentDto{
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DepartmentRequestDto extends DepartmentDto {
 
     private String deptNo;
     private String deptName;

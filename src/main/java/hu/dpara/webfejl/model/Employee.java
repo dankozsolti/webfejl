@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.sql.Date;
+
 @AllArgsConstructor
 @ToString
 @Builder
@@ -15,10 +17,10 @@ import lombok.ToString;
 public class Employee {
 
 	private int empNo;
-	private String birthDate;
+	private Date birthDate;
 	private String firstName;
 	private String lastName;
 	private Gender gender;
-	private String hireDate;
+	private Date hireDate;
 	
 }

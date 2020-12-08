@@ -18,13 +18,11 @@ import javax.persistence.Table;
 public class DepartmentEntity {
 
     @Id
-    /*@GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")*/
-    @Column
+    @Column(name = "dept_no")
     private String deptNo;
 
 
-    @Column
+    @Column(name = "dept_name")
     private String deptName;
 
 

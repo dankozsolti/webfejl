@@ -1,5 +1,6 @@
 package hu.dpara.webfejl.services;
 
+import hu.dpara.webfejl.dao.DepartmentDao;
 import hu.dpara.webfejl.exception.DepartmentAlreadyExistsException;
 import hu.dpara.webfejl.exception.UnknownDepartmentException;
 import hu.dpara.webfejl.model.Department;

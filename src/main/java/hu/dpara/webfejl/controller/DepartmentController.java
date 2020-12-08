@@ -24,7 +24,7 @@ public class DepartmentController {
 
     private final DepartmentService service;
 
-    @GetMapping("/departments")
+    @GetMapping("/getAll")
     public Collection<DepartmentDto> listDepartment(){
         return service.getAllDepartment()
                 .stream()
@@ -35,7 +35,7 @@ public class DepartmentController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/departments")
+    @PostMapping("/create")
     public String record(@Valid @RequestBody DepartmentRequestDto requestDto) {
 
         try {
@@ -63,7 +63,7 @@ public class DepartmentController {
     }
 
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public String update(@Valid @RequestBody DepartmentRequestDto departmentDto) {
         try{
             service.updateDepartment(new Department(
