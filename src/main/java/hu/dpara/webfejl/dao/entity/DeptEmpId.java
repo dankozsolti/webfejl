@@ -1,22 +1,20 @@
 package hu.dpara.webfejl.dao.entity;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@Embeddable
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class DeptEmpId implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name="emp_no")
-    private EmployeeEntity id;
+    private int empNo;
 
+    private String deptNo;
 
-    @ManyToOne
-    @JoinColumn(name="dept_no")
-    private DepartmentEntity deptNo;
 }

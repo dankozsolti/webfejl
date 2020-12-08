@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.persistence.Enumerated;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class Employee {
 	private Date birthDate;
 	private String firstName;
 	private String lastName;
-	private Gender gender;
+	private String gender;
 	private Date hireDate;
 	
 }

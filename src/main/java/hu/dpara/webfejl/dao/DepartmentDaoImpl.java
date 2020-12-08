@@ -89,7 +89,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     private DepartmentEntity queryDepartment(String deptNo) throws UnknownDepartmentException {
-        Optional<DepartmentEntity> departmentEntity = departmentRepository.findByDeptNo(deptNo);
+        Optional<DepartmentEntity> departmentEntity = departmentRepository.findById(deptNo);
 
         if (!departmentEntity.isPresent()) {
             UnknownDepartmentException departmentException = new UnknownDepartmentException("Department with department number " + deptNo + " doesn't exist.");

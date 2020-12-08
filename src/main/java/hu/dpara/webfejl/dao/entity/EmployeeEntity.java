@@ -13,27 +13,26 @@ import java.sql.Date;
 @ToString
 @Entity
 @Table(name = "employees", schema = "employees")
-
 public class EmployeeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="emp_no")
-    private long id;
+    private int empNo;
 
-    @Column
+    @Column(name="birth_date")
     private Date birthDate;
 
-    @Column
+    @Column(name="first_name")
     private String firstName;
 
-    @Column
+    @Column(name="last_name")
     private String lastName;
 
-    @Column
-    private Gender gender;
+    @Column(name="gender")
+    private String gender;
 
-    @Column
+    @Column(name="hire_date")
     private Date hireDate;
 
 

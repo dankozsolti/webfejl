@@ -2,28 +2,37 @@ package hu.dpara.webfejl.dao.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
-@Table(name = "dept_emp", schema = "employees")
+@EqualsAndHashCode
+@Table(name="dept_emp", schema="employees")
+@IdClass(DeptEmpId.class)
+public class DeptEmpEntity implements Serializable {
 
-public class DeptEmpEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @ManyToOne
+    @JoinColumn(name ="emp_no")
+    private EmployeeEntity empNo;
 
-    @EmbeddedId
-    private DeptEmpId id;
+    @Id
+    @ManyToOne
+    @JoinColumn(name ="dept_no")
+    private DepartmentEntity deptNo;
 
-    @Column
+    @Column(name ="from_date")
     private Date fromDate;
 
-    @Column
+    @Column(name ="to_date")
     private Date toDate;
+
+
 }

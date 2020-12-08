@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(path = "/department")
 public class DepartmentController {
 
     private final DepartmentService service;

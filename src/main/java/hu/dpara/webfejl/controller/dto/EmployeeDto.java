@@ -18,7 +18,7 @@ public class EmployeeDto {
 	private Date birthDate;
 	private String firstName;
 	private String lastName;
-	private Gender gender;
+	private String gender;
 	private Date hireDate;
 	
 }
