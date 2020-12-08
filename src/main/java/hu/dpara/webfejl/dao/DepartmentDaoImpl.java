@@ -39,7 +39,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
         departmentRepository.save(departmentEntity);
         return;
     }
-    DepartmentAlreadyExistsException departmentException = new DepartmentAlreadyExistsException("Department with department number "+department.getDeptNo()+" already exists.");
+    DepartmentAlreadyExistsException departmentException = new DepartmentAlreadyExistsException("Department with department number " + department.getDeptNo()+" already exists.");
         log.error("Exception: {} thrown with message: "+departmentException.getMessage(),departmentException.getClass());
         throw departmentException;
 
@@ -71,7 +71,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     public void deleteByDeptNo(String deptNo) throws UnknownDepartmentException {
 
         DepartmentEntity departmentEntity = queryDepartment(deptNo);
-        departmentRepository.deleteByDeptNo(deptNo);
+        departmentRepository.deleteById(deptNo);
         log.trace("Department deleted: {}", departmentEntity);
 
     }
@@ -92,7 +92,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Optional<DepartmentEntity> departmentEntity = departmentRepository.findByDeptNo(deptNo);
 
         if (!departmentEntity.isPresent()) {
-            UnknownDepartmentException departmentException = new UnknownDepartmentException("Department with department number" + deptNo + " doesn't exist.");
+            UnknownDepartmentException departmentException = new UnknownDepartmentException("Department with department number " + deptNo + " doesn't exist.");
             log.error("Exception: {} thrown with message: "+departmentException.getMessage(),departmentException.getClass());
             throw departmentException;
         }
