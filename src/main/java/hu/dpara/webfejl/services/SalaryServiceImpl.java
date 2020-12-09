@@ -28,8 +28,8 @@ public class SalaryServiceImpl implements SalaryService{
     }
 
     @Override
-    public void recordSalary(Salary Salary) throws SalaryAlreadyExistsException, UnknownEmployeeException {
-        salaryDao.createSalary(Salary);
+    public void recordSalary(Salary salary) throws SalaryAlreadyExistsException, UnknownEmployeeException {
+        salaryDao.createSalary(salary);
     }
 
     @Transactional
@@ -38,7 +38,7 @@ public class SalaryServiceImpl implements SalaryService{
     }
 
     @Override
-    public void updateSalary(Salary Salary) throws UnknownSalaryException, UnknownEmployeeException {
-        salaryDao.update(Salary);
+    public void updateSalary(Salary salary) throws UnknownSalaryException, UnknownEmployeeException {
+        salaryDao.update(salary);
     }
 }

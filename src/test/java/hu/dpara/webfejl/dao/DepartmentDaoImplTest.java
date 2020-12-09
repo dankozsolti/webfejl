@@ -48,7 +48,7 @@ class DepartmentDaoImplTest {
     }
 
     @Test
-    void readAll() throws UnknownDepartmentException {
+    void readAll() {
         when(departmentRepository.findAll()).thenReturn(getDepartmentEntities());
         assertEquals(dao.readAll(),getDepartments());
     }

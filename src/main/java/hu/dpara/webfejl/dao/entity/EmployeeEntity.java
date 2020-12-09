@@ -17,7 +17,6 @@ import java.sql.Date;
 public class EmployeeEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="emp_no")
     private int empNo;
 

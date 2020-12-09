@@ -1,1 +1,2 @@
-# webfejl
+# webfejlesztés
+Webfejlesztés Spring projekt

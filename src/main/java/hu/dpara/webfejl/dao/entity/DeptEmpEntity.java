@@ -18,7 +18,6 @@ import java.sql.Date;
 public class DeptEmpEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @ManyToOne
     @JoinColumn(name ="emp_no")
     private EmployeeEntity empNo;
