@@ -54,17 +54,15 @@ public class DeptEmpController {
                     requestDto.getToDate()
 
             ));
-        } catch (DeptEmpAlreadyExistsException e){
+        } catch (DeptEmpAlreadyExistsException | UnknownEmployeeException | UnknownDepartmentException e){
             log.error("Exception: {} handled with message: "+e.getMessage(),e.getClass());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
-        } catch (UnknownDepartmentException | UnknownEmployeeException e) {
-            e.printStackTrace();
         }
         return "DeptEmp successfully created";
     }
 
-    @DeleteMapping("/delete/{empNo}")
-    public String deleteDeptEmp(@PathVariable("empNo") EmployeeEntity empNo, DepartmentEntity deptNo)  {
+    @DeleteMapping("/delete/{empNo}/{deptNo}")
+    public String deleteDeptEmp(@PathVariable("empNo") EmployeeEntity empNo, @PathVariable("deptNo") DepartmentEntity deptNo)  {
         try{
             service.deleteDeptEmpByEmpNoAndDeptNo(empNo, deptNo);
         }catch (UnknownDeptEmpException e){

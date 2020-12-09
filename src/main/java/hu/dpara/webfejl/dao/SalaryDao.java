@@ -1,4 +1,4 @@
-package hu.dpara.webfejl.services;
+package hu.dpara.webfejl.dao;
 
 import hu.dpara.webfejl.dao.entity.EmployeeEntity;
 import hu.dpara.webfejl.dao.entity.SalaryId;
@@ -10,11 +10,12 @@ import hu.dpara.webfejl.model.Salary;
 import java.sql.Date;
 import java.util.Collection;
 
-public interface SalaryService {
+public interface SalaryDao {
 
-    Collection<Salary> getAllSalary();
-    void recordSalary(Salary salary) throws SalaryAlreadyExistsException, UnknownEmployeeException;
+    Collection<Salary> readAll();
+    Salary readByEmpNo(EmployeeEntity empNo) throws UnknownSalaryException;
+    void createSalary(Salary salary) throws SalaryAlreadyExistsException, UnknownEmployeeException;
     void deleteByEmpNoAndFromDate(EmployeeEntity empNo, Date fromDate) throws UnknownSalaryException, UnknownEmployeeException;
-    void updateSalary(Salary salary) throws UnknownSalaryException, UnknownEmployeeException;
+    void update(Salary salary) throws UnknownSalaryException, UnknownEmployeeException;
 
 }

@@ -4,6 +4,7 @@ import hu.dpara.webfejl.enums.Gender;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Data
@@ -13,7 +14,7 @@ import java.sql.Date;
 @ToString
 @Entity
 @Table(name = "employees", schema = "employees")
-public class EmployeeEntity {
+public class EmployeeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

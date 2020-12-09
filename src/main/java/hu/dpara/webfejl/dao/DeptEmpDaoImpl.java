@@ -117,6 +117,7 @@ public class DeptEmpDaoImpl implements DeptEmpDao {
         Optional<EmployeeEntity> employeeEntity = employeeRepository.findById(empNo);
 
         if (!employeeEntity.isPresent()) {
+
             UnknownEmployeeException employeeException = new UnknownEmployeeException("Employee with Employee number " + empNo + " doesn't exist.");
             log.error("Exception: {} thrown with message: "+employeeException.getMessage(),employeeException.getClass());
             throw employeeException;

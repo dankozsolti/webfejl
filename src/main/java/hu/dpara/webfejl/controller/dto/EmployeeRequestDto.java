@@ -15,8 +15,6 @@ import java.sql.Date;
 @AllArgsConstructor
 public class EmployeeRequestDto extends EmployeeDto{
 
-    @Min(1)
-    private int empNo;
     private Date birthDate;
     private String firstName;
     private String lastName;

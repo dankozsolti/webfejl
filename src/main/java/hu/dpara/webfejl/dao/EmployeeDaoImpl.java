@@ -84,7 +84,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public void deleteByEmpNo(int empNo) throws UnknownEmployeeException {
 
         EmployeeEntity employeeEntity = queryEmployee(empNo);
-        employeeRepository.deleteById(empNo);
+        employeeRepository.deleteByEmpNo(empNo);
         log.trace("Employee deleted: {}", employeeEntity);
 
     }
@@ -106,7 +106,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     private EmployeeEntity queryEmployee(int empNo) throws UnknownEmployeeException {
-        Optional<EmployeeEntity> employeeEntity = employeeRepository.findById(empNo);
+        Optional<EmployeeEntity> employeeEntity = employeeRepository.findByEmpNo(empNo);
 
         if (!employeeEntity.isPresent()) {
             UnknownEmployeeException employeeException = new UnknownEmployeeException("Employee with employee number " + empNo + " doesn't exist.");

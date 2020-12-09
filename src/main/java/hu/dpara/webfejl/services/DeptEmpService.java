@@ -2,8 +2,10 @@ package hu.dpara.webfejl.services;
 
 import hu.dpara.webfejl.dao.entity.DepartmentEntity;
 import hu.dpara.webfejl.dao.entity.EmployeeEntity;
-import hu.dpara.webfejl.exception.*;
-import hu.dpara.webfejl.model.Department;
+import hu.dpara.webfejl.exception.DeptEmpAlreadyExistsException;
+import hu.dpara.webfejl.exception.UnknownDepartmentException;
+import hu.dpara.webfejl.exception.UnknownDeptEmpException;
+import hu.dpara.webfejl.exception.UnknownEmployeeException;
 import hu.dpara.webfejl.model.DeptEmp;
 
 import java.util.Collection;

@@ -13,9 +13,9 @@ import java.sql.Date;
 @AllArgsConstructor
 public class DeptManagerDto {
 
-	private String deptNo;
 	private int empNo;
+	private String deptNo;
 	private Date fromDate;
 	private Date toDate;
-	
+
 }

@@ -15,8 +15,8 @@ import java.sql.Date;
 @EqualsAndHashCode
 public class DeptManager {
 
-	private String deptNo;
 	private int empNo;
+	private String deptNo;
 	private Date fromDate;
 	private Date toDate;
 	
