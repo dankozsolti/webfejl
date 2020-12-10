@@ -1,6 +1,5 @@
 package hu.dpara.webfejl.dao.entity;
 
-import hu.dpara.webfejl.enums.Gender;
 import lombok.*;
 
 import javax.persistence.*;

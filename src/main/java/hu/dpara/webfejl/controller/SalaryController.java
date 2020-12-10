@@ -63,7 +63,7 @@ public class SalaryController {
     @DeleteMapping("/delete/{empNo}/{fromDate}")
     public String deleteTitleByEmpNo(@PathVariable("empNo") EmployeeEntity empNo,
                                      @PathVariable("fromDate") Date fromDate)  {
-        try{
+        try {
             service.deleteByEmpNoAndFromDate(empNo,fromDate);
         }catch (UnknownEmployeeException | UnknownSalaryException e){
             log.error("Exception: {} handled with message: "+e.getMessage(),e.getClass());

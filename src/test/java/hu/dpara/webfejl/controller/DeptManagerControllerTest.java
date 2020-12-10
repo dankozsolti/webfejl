@@ -1,15 +1,15 @@
 package hu.dpara.webfejl.controller;
 
-import hu.dpara.webfejl.controller.dto.DeptEmpDto;
-import hu.dpara.webfejl.controller.dto.DeptEmpRequestDto;
+import hu.dpara.webfejl.controller.dto.DeptManagerDto;
+import hu.dpara.webfejl.controller.dto.DeptManagerRequestDto;
 import hu.dpara.webfejl.dao.entity.DepartmentEntity;
 import hu.dpara.webfejl.dao.entity.EmployeeEntity;
-import hu.dpara.webfejl.exception.DeptEmpAlreadyExistsException;
+import hu.dpara.webfejl.exception.DeptManagerAlreadyExistsException;
 import hu.dpara.webfejl.exception.UnknownDepartmentException;
-import hu.dpara.webfejl.exception.UnknownDeptEmpException;
+import hu.dpara.webfejl.exception.UnknownDeptManagerException;
 import hu.dpara.webfejl.exception.UnknownEmployeeException;
-import hu.dpara.webfejl.model.DeptEmp;
-import hu.dpara.webfejl.services.DeptEmpService;
+import hu.dpara.webfejl.model.DeptManager;
+import hu.dpara.webfejl.services.DeptManagerService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,39 +25,39 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DeptEmpControllerTest {
+class DeptManagerControllerTest {
 
     @InjectMocks
-    private DeptEmpController DeptEmpController;
+    private DeptManagerController DeptManagerController;
 
     @Mock
-    private DeptEmpService DeptEmpService;
+    private DeptManagerService DeptManagerService;
 
     @Test
-    void listDeptEmpS() {
-        when(DeptEmpService.getAllDeptEmp()).thenReturn(getDeptEmpS());
-        DeptEmpController.listDeptEmp();
-        verify(DeptEmpService,times(1)).getAllDeptEmp();
-        assertEquals(getDeptEmpDtoS(),DeptEmpController.listDeptEmp());
+    void listDeptManagerS() {
+        when(DeptManagerService.getAllDeptManager()).thenReturn(getDeptManagerS());
+        DeptManagerController.listDeptManager();
+        verify(DeptManagerService,times(1)).getAllDeptManager();
+        assertEquals(getDeptManagerDtoS(),DeptManagerController.listDeptManager());
     }
 
     @Test
-    void record() throws DeptEmpAlreadyExistsException, UnknownDepartmentException, UnknownEmployeeException {
-        DeptEmpController.record(getDefaultDeptEmpRequestDto());
-        verify(DeptEmpService,times(1)).recordDeptEmp(getDefaultDeptEmp());
-        doThrow(DeptEmpAlreadyExistsException.class).when(DeptEmpService).recordDeptEmp(getDefaultDeptEmp());
+    void record() throws DeptManagerAlreadyExistsException, UnknownDepartmentException, UnknownEmployeeException {
+        DeptManagerController.record(getDefaultDeptManagerRequestDto());
+        verify(DeptManagerService,times(1)).recordDeptManager(getDefaultDeptManager());
+        doThrow(DeptManagerAlreadyExistsException.class).when(DeptManagerService).recordDeptManager(getDefaultDeptManager());
         assertThrows(ResponseStatusException.class,()->{
-            DeptEmpController.record(getDefaultDeptEmpRequestDto());
+            DeptManagerController.record(getDefaultDeptManagerRequestDto());
         });
     }
 
     @Test
-    void update() throws UnknownDeptEmpException, UnknownDepartmentException, UnknownEmployeeException {
-        DeptEmpController.update(getDefaultDeptEmpRequestDto());
-        verify(DeptEmpService,times(1)).updateDeptEmp(getDefaultDeptEmp());
-        doThrow(UnknownDeptEmpException.class).when(DeptEmpService).updateDeptEmp(getDefaultDeptEmp());
+    void update() throws UnknownDeptManagerException, UnknownDepartmentException, UnknownEmployeeException {
+        DeptManagerController.update(getDefaultDeptManagerRequestDto());
+        verify(DeptManagerService,times(1)).updateDeptManager(getDefaultDeptManager());
+        doThrow(UnknownDeptManagerException.class).when(DeptManagerService).updateDeptManager(getDefaultDeptManager());
         assertThrows(ResponseStatusException.class,()->{
-            DeptEmpController.update(getDefaultDeptEmpRequestDto());
+            DeptManagerController.update(getDefaultDeptManagerRequestDto());
         });
     }
 
@@ -81,19 +81,19 @@ class DeptEmpControllerTest {
     }
 
     @Test
-    void deleteDeptEmp() throws UnknownDeptEmpException, UnknownDepartmentException, UnknownEmployeeException {
-        DeptEmpController.deleteDeptEmp(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
-        verify(DeptEmpService,times(1)).deleteDeptEmpByEmpNoAndDeptNo(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
-        doThrow(UnknownDeptEmpException.class).when(DeptEmpService).deleteDeptEmpByEmpNoAndDeptNo(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
+    void deleteDeptManager() throws UnknownDeptManagerException, UnknownDepartmentException, UnknownEmployeeException {
+        DeptManagerController.deleteDeptManager(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
+        verify(DeptManagerService,times(1)).deleteDeptManagerByEmpNoAndDeptNo(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
+        doThrow(UnknownDeptManagerException.class).when(DeptManagerService).deleteDeptManagerByEmpNoAndDeptNo(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
         assertThrows(ResponseStatusException.class,()-> {
-            DeptEmpController.deleteDeptEmp(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
+            DeptManagerController.deleteDeptManager(getDefaultEmployeeEntity(),getDefaultDepartmentEntity());
         });
     }
 
 
 
-    private DeptEmp getDefaultDeptEmp() {
-        return new DeptEmp(
+    private DeptManager getDefaultDeptManager() {
+        return new DeptManager(
                 1,
                 "d001",
                 Date.valueOf("1999-01-01"),
@@ -102,8 +102,8 @@ class DeptEmpControllerTest {
         );
     }
 
-    private DeptEmpRequestDto getDefaultDeptEmpRequestDto() {
-        return new DeptEmpRequestDto(
+    private DeptManagerRequestDto getDefaultDeptManagerRequestDto() {
+        return new DeptManagerRequestDto(
                 1,
                 "d001",
                 Date.valueOf("1999-01-01"),
@@ -111,34 +111,34 @@ class DeptEmpControllerTest {
         );
     }
 
-    private Collection<DeptEmp> getDeptEmpS() {
+    private Collection<DeptManager> getDeptManagerS() {
         return Arrays.asList(
 
-                new DeptEmp(
+                new DeptManager(
                         1,
                         "d001",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2020-12-12")
                 ),
-                new DeptEmp(
+                new DeptManager(
                         2,
                         "d002",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2021-12-12")
                 ),
-                new DeptEmp(
+                new DeptManager(
                         3,
                         "d003",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2022-12-12")
                 ),
-                new DeptEmp(
+                new DeptManager(
                         4,
                         "d004",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2023-12-12")
                 ),
-                new DeptEmp(
+                new DeptManager(
                         5,
                         "d005",
                         Date.valueOf("1999-01-01"),
@@ -148,34 +148,34 @@ class DeptEmpControllerTest {
 
     }
 
-    private Collection<DeptEmpDto> getDeptEmpDtoS() {
+    private Collection<DeptManagerDto> getDeptManagerDtoS() {
         return Arrays.asList(
 
-                new DeptEmpDto(
+                new DeptManagerDto(
                         1,
                         "d001",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2020-12-12")
                 ),
-                new DeptEmpDto(
+                new DeptManagerDto(
                         2,
                         "d002",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2021-12-12")
                 ),
-                new DeptEmpDto(
+                new DeptManagerDto(
                         3,
                         "d003",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2022-12-12")
                 ),
-                new DeptEmpDto(
+                new DeptManagerDto(
                         4,
                         "d004",
                         Date.valueOf("1999-01-01"),
                         Date.valueOf("2023-12-12")
                 ),
-                new DeptEmpDto(
+                new DeptManagerDto(
                         5,
                         "d005",
                         Date.valueOf("1999-01-01"),

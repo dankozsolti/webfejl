@@ -1,6 +1,6 @@
 package hu.dpara.webfejl.controller.dto;
 
-import hu.dpara.webfejl.enums.Gender;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
