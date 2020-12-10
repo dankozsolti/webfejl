@@ -158,6 +158,7 @@ modules.xml
 .idea/sonarlint
 
 ### Maven ###
+.mvn/
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -166,8 +167,5 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,eclipse,intellij+all
